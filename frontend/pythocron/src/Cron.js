@@ -8,15 +8,11 @@ import { styled } from '@mui/material/styles';
 import cronstrue from 'cronstrue';
 
 class Cron extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { cronExpression: "* * * * *" }
-    }
     handleCronExpressionUpdate = event => {
-        this.setState({ cronExpression: event.target.value })
+        this.props.onCronExpressionUpdate(event.target.value)
     }
     handleCronExpressionExampleClicked = cronExpression => {
-        this.setState({ cronExpression })
+        this.props.onCronExpressionUpdate(cronExpression)
         // console.log("CIPSKO")
     }
     render() {
@@ -45,9 +41,9 @@ class Cron extends React.Component {
                     label="Cron expression"
                     variant="outlined"
                     sx={{ width: 1, fontFamily: "monospace", fontSize: 200 }}
-                    value={this.state.cronExpression}
+                    value={this.props.cronExpression}
                     onChange={this.handleCronExpressionUpdate}
-                    helperText={cronstrue.toString(this.state.cronExpression, { verbose: true, use24HourTimeFormat: true })}
+                    helperText={cronstrue.toString(this.props.cronExpression, { verbose: true, use24HourTimeFormat: true })}
                 />
                 <Typography variant="h5" component="h3">
                     Examples:

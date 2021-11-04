@@ -31,17 +31,21 @@ class App extends React.Component {
       code: `from datetime import datetime
       print(datetime.now())
       print("cumbucket")
-      `
+      `,
+      cronExpression: "* * * * *"
     }
   }
   handleDeployClicked = event => {
+    console.log(this.state.code)
     console.log(this.state.code)
   }
   onCodeChange = code => {
     // console.log("change", code);
     this.setState({ code })
   }
-  handleDeployClicked
+  handleCronExpressionUpdate = cronExpression => {
+    this.setState({ cronExpression })
+  }
   render() {
     const LogsTextField = styled(TextField)({
       '& .MuiInputBase-input': {
@@ -56,7 +60,7 @@ class App extends React.Component {
           <Grid item xs={4}>
             <Paper sx={{ p: 3 }}>
 
-              <Cron />
+              <Cron cronExpression={this.state.cronExpression} onCronExpressionUpdate={this.handleCronExpressionUpdate} />
 
             </Paper>
 
