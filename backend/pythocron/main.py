@@ -44,7 +44,7 @@ def list_pythocrons(
 
 @app.get("/pythocrons/{pythocron_id}")
 def read_pythocron(
-    pythocron_id,
+    pythocron_id: str,
     settings: config.Settings = Depends(get_settings),
 ):
     pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
@@ -93,6 +93,24 @@ def create_pythocron(
     cron.write()
 
     return {"pythocron_id": pythocron_id}
+
+
+@app.delete("/pythocrons/{pythocron_id}")
+def delete_pythocron(
+    pythocron_id: str,
+    settings: config.Settings = Depends(get_settings),
+):
+
+    pythocron_logfile_path = f"{settings.logs_dir_path}/{pythocron_id}.log"
+    pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
+    pathlib.Path(pythocron_logfile_path).unlink(missing_ok=True)
+    pathlib.Path(pythocron_scriptfile_path).unlink(missing_ok=True)
+
+    cron = CronTab(user="root")
+    cron.remove_all(comment=pythocron_id)
+    cron.write()
+
+    return {"deleted": {"pythocron_id": pythocron_id}}
 
 
 @app.get("/pythocrons/{pythocron_id}/logs")
