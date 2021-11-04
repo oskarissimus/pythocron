@@ -6,6 +6,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import LoadingButton from '@mui/lab/LoadingButton';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import AceEditor from "react-ace";
 import { styled } from '@mui/material/styles';
 
@@ -32,10 +35,13 @@ class App extends React.Component {
       print(datetime.now())
       print("cumbucket")
       `,
-      cronExpression: "* * * * *"
+      cronExpression: "* * * * *",
+      loading: false,
+
     }
   }
   handleDeployClicked = event => {
+    this.setState({ loading: true })
     const data = {
       script: this.state.code,
       schedule: this.state.cronExpression
@@ -49,10 +55,12 @@ class App extends React.Component {
       method: "POST"
     })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        this.setState({ loading: true })
+        console.log(data)
+      });
   }
   onCodeChange = code => {
-    // console.log("change", code);
     this.setState({ code })
   }
   handleCronExpressionUpdate = cronExpression => {
@@ -113,14 +121,16 @@ class App extends React.Component {
 
 
           <Grid item xs={12}>
-            <Button
+            <LoadingButton
+              loading={this.state.loading}
               variant="contained"
               color="secondary"
               sx={{ width: 1, fontSize: 200 }}
               onClick={this.handleDeployClicked}
+              loadingIndicator={<CircularProgress color="inherit" size={200} />}
             >
               Deploy
-            </Button>
+            </LoadingButton>
           </Grid>
 
         </Grid>
