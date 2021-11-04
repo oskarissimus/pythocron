@@ -13,4 +13,4 @@ class PythocronCreate(PythocronBase):
 
 
 class Pythocron(PythocronBase):
-    id: int
+    id: str

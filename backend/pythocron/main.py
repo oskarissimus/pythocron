@@ -49,7 +49,24 @@ def read_pythocron(
 ):
     pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
     try:
-        return open(pythocron_scriptfile_path).read()
+        pythocron_scriptfile_contents = open(pythocron_scriptfile_path).read()
+        cron = CronTab(user="root")
+        pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron_id)
+        pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
+        if len(pythocron_jobs_matching_id_list) == 0:
+            raise HTTPException(status_code=404, detail="Pythocron not found")
+        elif len(pythocron_jobs_matching_id_list) == 1:
+
+            return schemas.Pythocron(
+                id=pythocron_id,
+                script=pythocron_scriptfile_contents,
+                schedule=str(pythocron_jobs_matching_id_list[0].slices),
+            )
+        else:
+            raise HTTPException(
+                status_code=422,
+                detail="More than one pythocron found, please dont hack me",
+            )
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Pythocron not found")
 
