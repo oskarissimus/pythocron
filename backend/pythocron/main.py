@@ -25,8 +25,10 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup_event():
-    pathlib.Path(get_settings().logs_dir_path).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(get_settings().scripts_dir_path).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(get_settings().logs_dir_path).mkdir(
+        parents=True, exist_ok=True)
+    pathlib.Path(get_settings().scripts_dir_path).mkdir(
+        parents=True, exist_ok=True)
 
 
 @app.get("/")
@@ -52,7 +54,8 @@ def read_pythocron(
         pythocron_scriptfile_contents = open(pythocron_scriptfile_path).read()
         cron = CronTab(user="root")
         pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron_id)
-        pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
+        pythocron_jobs_matching_id_list = [
+            *pythocron_jobs_matching_id_iterator]
         if len(pythocron_jobs_matching_id_list) == 0:
             raise HTTPException(status_code=404, detail="Pythocron not found")
         elif len(pythocron_jobs_matching_id_list) == 1:
@@ -86,7 +89,7 @@ def create_pythocron(
 
     cron = CronTab(user="root")
     job = cron.new(
-        command=f"/usr/local/bin/python {pythocron_scriptfile_path} >> {pythocron_logfile_path}",
+        command=f"/usr/local/bin/python {pythocron_scriptfile_path} >> {pythocron_logfile_path} 2>&1",
         comment=pythocron_id,
     )
     job.setall(pythocron.schedule)
