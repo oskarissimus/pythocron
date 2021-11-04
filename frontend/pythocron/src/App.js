@@ -1,11 +1,14 @@
-import React, { useImperativeHandle } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import AceEditor from "react-ace";
+import { styled } from '@mui/material/styles';
+
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-github";
 import Cron from "./Cron"
@@ -40,6 +43,12 @@ class App extends React.Component {
   }
   handleDeployClicked
   render() {
+    const LogsTextField = styled(TextField)({
+      '& .MuiInputBase-input': {
+        fontFamily: "monospace",
+      },
+    });
+
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -65,15 +74,23 @@ class App extends React.Component {
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
                 value={this.state.code}
+                fontSize={16}
               />
 
             </Paper>
           </Grid>
           <Grid item xs={4}>
             <Paper sx={{ p: 3 }}>
-              <Typography variant="h2" sx={{ textAlign: "center" }} >
+              <Typography variant="h2" sx={{ mb: 3, textAlign: "center" }} >
                 Logs
               </Typography>
+              <LogsTextField
+                fullWidth
+                multiline
+                rows={4}
+                defaultValue="Deploy to get logs"
+                sx={{ fontFamily: "monospace" }}
+              />
             </Paper>
           </Grid>
 
