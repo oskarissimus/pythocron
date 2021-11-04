@@ -30,11 +30,31 @@ def startup_event():
 
 
 @app.get("/")
-def root(settings: config.Settings = Depends(get_settings)):
+def root():
     return {"message": "Hello pythocron"}
 
 
-@app.post("/backend/pythocron")
+@app.get("/pythocrons")
+def list_pythocrons(
+    settings: config.Settings = Depends(get_settings),
+):
+    abs_paths_list = pathlib.Path(settings.scripts_dir_path).glob("*.py")
+    return sorted([abs_path.name[:-3] for abs_path in abs_paths_list])
+
+
+@app.get("/pythocrons/{pythocron_id}")
+def read_pythocron(
+    pythocron_id,
+    settings: config.Settings = Depends(get_settings),
+):
+    pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
+    try:
+        return open(pythocron_scriptfile_path).read()
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Pythocron not found")
+
+
+@app.post("/pythocrons")
 def create_pythocron(
     pythocron: schemas.PythocronCreate,
     settings: config.Settings = Depends(get_settings),
@@ -58,11 +78,13 @@ def create_pythocron(
     return {"pythocron_id": pythocron_id}
 
 
-@app.get("/backend/pythocron/{pythocron_id}/logs")
-def read_pythocron_logs(pythocron_id):
-    logs_dir_path = "/app/data/logs"
-    pythocron_logfile_path = f"{logs_dir_path}/{pythocron_id}.log"
+@app.get("/pythocrons/{pythocron_id}/logs")
+def read_pythocron_logs(
+    pythocron_id,
+    settings: config.Settings = Depends(get_settings),
+):
+    pythocron_logfile_path = f"{settings.logs_dir_path}/{pythocron_id}.log"
     try:
-        return open(pythocron_logfile_path).readlines()
+        return open(pythocron_logfile_path).read()
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Pythocron logs not found")
