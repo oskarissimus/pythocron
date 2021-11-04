@@ -2,8 +2,10 @@ from pydantic import BaseModel
 
 
 class PythocronBase(BaseModel):
-    script: str
-    schedule: str
+    script: str = (
+        'from datetime import datetime\nprint(datetime.now())\nprint("cumbucket")'
+    )
+    schedule: str = "BISKUPA"
 
 
 class PythocronCreate(PythocronBase):

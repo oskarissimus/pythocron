@@ -26,6 +26,7 @@ app.add_middleware(
 @app.on_event("startup")
 def startup_event():
     pathlib.Path(get_settings().logs_dir_path).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(get_settings().scripts_dir_path).mkdir(parents=True, exist_ok=True)
 
 
 @app.get("/")
@@ -39,10 +40,17 @@ def create_pythocron(
     settings: config.Settings = Depends(get_settings),
 ):
     pythocron_id = utils.generate_id()
+
     pythocron_logfile_path = f"{settings.logs_dir_path}/{pythocron_id}.log"
+    pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
+
+    with open(pythocron_scriptfile_path, "w") as pythocron_scriptfile:
+        pythocron_scriptfile.write(pythocron.script)
 
     cron = CronTab(user="root")
-    job = cron.new(command=f"echo hello_world >> {pythocron_logfile_path}")
+    job = cron.new(
+        command=f"/usr/local/bin/python {pythocron_scriptfile_path} >> {pythocron_logfile_path}"
+    )
     job.minute.every(1)
     cron.write()
     return {"pythocron_id": pythocron_id}
