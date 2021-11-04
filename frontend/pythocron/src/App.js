@@ -1,17 +1,14 @@
 import React from 'react';
-import Editor from 'react-simple-code-editor';
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-python';
-import "prismjs/themes/prism.css"; //Example style, you can use another
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import Cron from 'react-cron-generator'
-import 'react-cron-generator/dist/cron-builder.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Typography } from '@mui/material';
-
+import Typography from '@mui/material/Typography';
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/theme-github";
+import Cron from "./Cron"
 const code = `from datetime import datetime
 print(datetime.now())
 `;
@@ -27,7 +24,9 @@ const theme = createTheme({
 
 class App extends React.Component {
   state = { code };
-
+  onChange = newValue => {
+    console.log("change", newValue);
+  }
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -35,17 +34,9 @@ class App extends React.Component {
         <Grid container spacing={4} p={4} >
           <Grid item xs={4}>
             <Paper sx={{ p: 3 }}>
-              <Typography variant="h2" sx={{ textAlign: "center" }} >
-                Cron
-              </Typography>
 
+              <Cron />
 
-              <Cron
-                onChange={(e) => { this.setState({ value: e }); }}
-                value={this.state.value}
-                showResultText={true}
-                showResultCron={true}
-              />
             </Paper>
 
           </Grid>
@@ -55,15 +46,12 @@ class App extends React.Component {
                 Code
               </Typography>
 
-              <Editor
-                value={this.state.code}
-                onValueChange={code => this.setState({ code })}
-                highlight={code => highlight(code, languages.python)}
-                padding={10}
-                style={{
-                  fontFamily: '"Fira code", "Fira Mono", monospace',
-                  fontSize: 12,
-                }}
+              <AceEditor
+                mode="python"
+                theme="github"
+                onChange={this.onChange}
+                name="UNIQUE_ID_OF_DIV"
+                editorProps={{ $blockScrolling: true }}
               />
 
             </Paper>
