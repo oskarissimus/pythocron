@@ -37,7 +37,7 @@ class App extends React.Component {
   }
   handleDeployClicked = event => {
     console.log(this.state.code)
-    console.log(this.state.code)
+    console.log(this.state.cronExpression)
   }
   onCodeChange = code => {
     // console.log("change", code);
@@ -91,6 +91,7 @@ class App extends React.Component {
               <LogsTextField
                 fullWidth
                 multiline
+                disabled
                 rows={4}
                 defaultValue="Deploy to get logs"
                 sx={{ fontFamily: "monospace" }}
