@@ -9,7 +9,7 @@ class CronExample extends React.Component {
             <React.Fragment>
 
                 <Grid item xs={2} textAlign="right">
-                    <Button size="small">
+                    <Button size="small" onClick={event => this.props.onCronExpressionExampleClicked(this.props.cronExpression)}>
                         {this.props.cronExpression}
                     </Button>
                 </Grid>

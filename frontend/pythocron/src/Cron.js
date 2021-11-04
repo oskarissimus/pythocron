@@ -15,8 +15,9 @@ class Cron extends React.Component {
     handleCronExpressionUpdate = event => {
         this.setState({ cronExpression: event.target.value })
     }
-    handleCronExpressionExamleClicked = event => {
-        this.setState({ cronExpression: event.target.text })
+    handleCronExpressionExampleClicked = cronExpression => {
+        this.setState({ cronExpression })
+        // console.log("CIPSKO")
     }
     render() {
 
@@ -53,12 +54,16 @@ class Cron extends React.Component {
                     alignItems="center"
                     columnSpacing={1}
                 >
-                    <CronExample cronExpression="* * * * *" cronExpressionDescription="Every minute" />
-                    <CronExample cronExpression="*/2 * * * *" cronExpressionDescription="Every 2 minutes" />
-                    <CronExample cronExpression="*/10 * * * *" cronExpressionDescription="Every 10 minutes" />
-                    <CronExample cronExpression="0 * * * *" cronExpressionDescription="Every hour at minute 0" />
-                    <CronExample cronExpression="17 * * * *" cronExpressionDescription="Every hour at minute 17" />
-                    <CronExample cronExpression="0 0 * * *" cronExpressionDescription="Every day at 00:00" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="* * * * *" cronExpressionDescription="Every minute" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="*/2 * * * *" cronExpressionDescription="Every 2 minutes" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="*/10 * * * *" cronExpressionDescription="Every 10 minutes" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="0 * * * *" cronExpressionDescription="Every hour at minute 0" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="17 * * * *" cronExpressionDescription="Every hour at minute 17" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="0 0 * * *" cronExpressionDescription="Every day at 00:00" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="37 21 * * *" cronExpressionDescription="Every day at 21:37" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="37 21 * * 1" cronExpressionDescription="Every monday at 21:37" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="37 21 2 * *" cronExpressionDescription="Every second day of each month at 21:37" />
+                    <CronExample onCronExpressionExampleClicked={this.handleCronExpressionExampleClicked} cronExpression="37 21 2 4 *" cronExpressionDescription="Every second day of april at 21:37" />
 
                 </Grid>
 
