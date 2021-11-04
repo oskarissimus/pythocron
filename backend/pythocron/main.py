@@ -49,10 +49,12 @@ def create_pythocron(
 
     cron = CronTab(user="root")
     job = cron.new(
-        command=f"/usr/local/bin/python {pythocron_scriptfile_path} >> {pythocron_logfile_path}"
+        command=f"/usr/local/bin/python {pythocron_scriptfile_path} >> {pythocron_logfile_path}",
+        comment=pythocron_id,
     )
-    job.minute.every(1)
+    job.setall(pythocron.schedule)
     cron.write()
+
     return {"pythocron_id": pythocron_id}
 
 

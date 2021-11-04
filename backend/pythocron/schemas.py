@@ -5,7 +5,7 @@ class PythocronBase(BaseModel):
     script: str = (
         'from datetime import datetime\nprint(datetime.now())\nprint("cumbucket")'
     )
-    schedule: str = "BISKUPA"
+    schedule: str = "* * * * *"
 
 
 class PythocronCreate(PythocronBase):
