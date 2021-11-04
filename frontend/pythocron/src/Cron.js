@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import CronExample from "./CronExample"
 import { styled } from '@mui/material/styles';
-
+import cronstrue from 'cronstrue';
 
 class Cron extends React.Component {
     constructor(props) {
@@ -26,6 +26,11 @@ class Cron extends React.Component {
                 fontSize: 40,
                 fontFamily: "monospace",
                 textAlign: "center"
+            },
+            '& .MuiFormHelperText-root': {
+                fontSize: 20,
+                fontFamily: "monospace",
+                textAlign: "center"
             }
         });
 
@@ -42,7 +47,7 @@ class Cron extends React.Component {
                     sx={{ width: 1, fontFamily: "monospace", fontSize: 200 }}
                     value={this.state.cronExpression}
                     onChange={this.handleCronExpressionUpdate}
-
+                    helperText={cronstrue.toString(this.state.cronExpression, { verbose: true, use24HourTimeFormat: true })}
                 />
                 <Typography variant="h5" component="h3">
                     Examples:

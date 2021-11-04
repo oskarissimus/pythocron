@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useImperativeHandle } from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -9,9 +9,8 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-github";
 import Cron from "./Cron"
-const code = `from datetime import datetime
-print(datetime.now())
-`;
+
+
 
 const theme = createTheme({
   palette: {
@@ -23,10 +22,23 @@ const theme = createTheme({
 
 
 class App extends React.Component {
-  state = { code };
-  onChange = newValue => {
-    console.log("change", newValue);
+  constructor(props) {
+    super(props)
+    this.state = {
+      code: `from datetime import datetime
+      print(datetime.now())
+      print("cumbucket")
+      `
+    }
   }
+  handleDeployClicked = event => {
+    console.log(this.state.code)
+  }
+  onCodeChange = code => {
+    // console.log("change", code);
+    this.setState({ code })
+  }
+  handleDeployClicked
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -42,16 +54,17 @@ class App extends React.Component {
           </Grid>
           <Grid item xs={4}>
             <Paper sx={{ p: 3 }}>
-              <Typography variant="h2" sx={{ textAlign: "center" }} >
+              <Typography variant="h2" sx={{ mb: 3, textAlign: "center" }} >
                 Code
               </Typography>
 
               <AceEditor
                 mode="python"
                 theme="github"
-                onChange={this.onChange}
+                onChange={this.onCodeChange}
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{ $blockScrolling: true }}
+                value={this.state.code}
               />
 
             </Paper>
@@ -66,7 +79,12 @@ class App extends React.Component {
 
 
           <Grid item xs={12}>
-            <Button variant="contained" color="secondary" sx={{ width: 1, fontSize: 200 }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ width: 1, fontSize: 200 }}
+              onClick={this.handleDeployClicked}
+            >
               Deploy
             </Button>
           </Grid>
