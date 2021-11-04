@@ -36,10 +36,9 @@ class App extends React.Component {
     }
   }
   handleDeployClicked = event => {
-    console.log()
     const data = {
-      script: "print('cipa')",
-      schedule: "* * * * *"
+      script: this.state.code,
+      schedule: this.state.cronExpression
     }
     fetch("http://localhost:8000/pythocrons", {
       body: JSON.stringify(data),
