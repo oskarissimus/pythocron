@@ -36,8 +36,21 @@ class App extends React.Component {
     }
   }
   handleDeployClicked = event => {
-    console.log(this.state.code)
-    console.log(this.state.cronExpression)
+    console.log()
+    const data = {
+      script: "print('cipa')",
+      schedule: "* * * * *"
+    }
+    fetch("http://localhost:8000/pythocrons", {
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "POST"
+    })
+      .then(response => response.json())
+      .then(data => console.log(data));
   }
   onCodeChange = code => {
     // console.log("change", code);
