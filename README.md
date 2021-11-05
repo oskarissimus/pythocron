@@ -43,7 +43,9 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 
 ## Todo list
 - [ ] Create route `/{pythocron_id}` in frontend to show particular pythocron
-- [x] Display list of uploaded pythocrons
+- [ ] Display list of uploaded pythocrons
 - [ ] Handle deleting, updating and deactivating pythocrons
 - [ ] docker-compose
 - [ ] Publish to docker hub
+- [ ] Unit testing for backend
+- [ ] Configure github actions to automathically build test and push to docker hub
