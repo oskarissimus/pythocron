@@ -4,17 +4,15 @@ import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from '@mui/material/CircularProgress';
 import Collapse from '@mui/material/Collapse';
-import Link from '@mui/material/Link';
 import AceEditor from "react-ace";
-import { styled } from '@mui/material/styles';
 
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-github";
 import Cron from "./Cron"
+import LogsSection from './LogsSection';
 
 
 const theme = createTheme({
@@ -38,23 +36,11 @@ print("Hello pythocron!")
       loading: false,
       pythocronSent: false,
       pythocronUploadSuccess: false,
-      fetchedLogs: "Deploy to get logs",
-      pythocronId: null
+      pythocronId: null,
+      enableLogsAutoRefresh: false
     }
   }
-  fetchLogs = () => {
-    fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${this.state.pythocronId}/logs`, {
-      method: "GET"
-    })
-      .then(response => {
-        if (response.status === 200) return response.json()
-        else if (response.status === 404) return "Wait for first code execution to see logs"
-      })
-      .then(data => {
-        this.setState({ fetchedLogs: data })
-        console.log(data)
-      });
-  }
+
   handleDeployClicked = event => {
     this.setState({ loading: true, pythocronSent: true })
     const data = {
@@ -72,8 +58,6 @@ print("Hello pythocron!")
       .then(response => response.json())
       .then(data => {
         this.setState({ loading: false, pythocronUploadSuccess: true, pythocronId: data.pythocron_id })
-        this.fetchLogs()
-        setInterval(this.fetchLogs, 10000)
         console.log(data)
       });
   }
@@ -90,13 +74,7 @@ print("Hello pythocron!")
 
   }
   render() {
-    const LogsTextField = styled(TextField)({
-      '& .MuiInputBase-root.Mui-disabled textarea': {
-        fontFamily: "monospace",
-        color: "black",
-        WebkitTextFillColor: "black"
-      },
-    });
+
 
     return (
       <ThemeProvider theme={theme}>
@@ -130,25 +108,11 @@ print("Hello pythocron!")
           </Grid>
           <Grid item xs={4}>
             <Paper sx={{ p: 3 }}>
-              <Typography variant="h2" sx={{ mb: 3, textAlign: "center" }} >
-                Logs
-              </Typography>
-              {this.state.pythocronSent && this.state.pythocronUploadSuccess &&
-                <Typography variant="body2">
-
-                  get logs in raw format from:&nbsp;
-                  <Link target="_blank" href={`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${this.state.pythocronId}/logs`}>
-                    {process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/{this.state.pythocronId}/logs
-                  </Link>
-
-
-                </Typography>}
-              <LogsTextField
-                fullWidth
-                multiline
-                disabled
-                rows={20}
-                value={this.state.fetchedLogs}
+              <LogsSection
+                pythocronSent={this.state.pythocronSent}
+                pythocronUploadSuccess={this.state.pythocronUploadSuccess}
+                pythocronId={this.state.pythocronId}
+                enableLogsAutoRefresh={this.state.enableLogsAutoRefresh}
               />
             </Paper>
           </Grid>
