@@ -7,22 +7,10 @@ Purpose of this project is to enable simple scheduled code execution. It's like 
 ```
 # Cloning repo
 git clone https://github.com/oskarissimus/pythocron.git
-cd pythocron/backend
+cd pythocron
 
-# Builing backend docker image
-docker build -t pythocron-backend .
-
-# Running backend docker container
-docker run -d -p 8000:8000 pythocron-backend
-
-# Go to frontend directory
-cd ../frontend/pythocron
-
-# Installing frontend dependencies
-npm install
-
-# Running frontend in dev mode
-npm start
+# Just docker-compose up :)
+docker-compose up
 ```
 
 ## Stopping
@@ -54,7 +42,7 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 - [ ] Create route `/{pythocron_id}` in frontend to show particular pythocron
 - [ ] Display list of uploaded pythocrons
 - [ ] Handle deleting, updating and deactivating pythocrons
-- [ ] docker-compose
+- [x] docker-compose
 - [ ] Publish to docker hub
 - [ ] Unit testing for backend
 - [ ] Configure github actions to automathically build test and push to docker hub

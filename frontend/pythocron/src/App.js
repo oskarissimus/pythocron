@@ -32,7 +32,7 @@ class App extends React.Component {
     this.state = {
       code: `from datetime import datetime
 print(datetime.now())
-print("cumbucket")
+print("Hello pythocron!")
 `,
       cronExpression: "* * * * *",
       loading: false,
@@ -43,8 +43,7 @@ print("cumbucket")
     }
   }
   fetchLogs = () => {
-    fetch(`http://localhost:8000/pythocrons/${this.state.pythocronId}/logs`, {
-      // fetch(`http://localhost:8000/pythocrons/tu4v/logs`, {
+    fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${this.state.pythocronId}/logs`, {
       method: "GET"
     })
       .then(response => {
@@ -62,7 +61,7 @@ print("cumbucket")
       script: this.state.code,
       schedule: this.state.cronExpression
     }
-    fetch("http://localhost:8000/pythocrons", {
+    fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons`, {
       body: JSON.stringify(data),
       headers: {
         Accept: "application/json",
@@ -92,8 +91,10 @@ print("cumbucket")
   }
   render() {
     const LogsTextField = styled(TextField)({
-      '& .MuiInputBase-input': {
+      '& .MuiInputBase-root.Mui-disabled textarea': {
         fontFamily: "monospace",
+        color: "black",
+        WebkitTextFillColor: "black"
       },
     });
 
@@ -136,8 +137,8 @@ print("cumbucket")
                 <Typography variant="body2">
 
                   get logs in raw format from:&nbsp;
-                  <Link target="_blank" href={`http://localhost:8000/pythocrons/${this.state.pythocronId}/logs`}>
-                    http://localhost:8000/pythocrons/{this.state.pythocronId}/logs
+                  <Link target="_blank" href={`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${this.state.pythocronId}/logs`}>
+                    {process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/{this.state.pythocronId}/logs
                   </Link>
 
 

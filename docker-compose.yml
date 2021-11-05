@@ -1,0 +1,14 @@
+version: "3.0"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+      context: ./frontend
+      # use if You deploy somewhere else than localhost 
+      # args:
+      #   REACT_APP_PYTHOCRON_BACKEND_URL: http://localhost:8000
+    ports:
+      - "5000:5000"
