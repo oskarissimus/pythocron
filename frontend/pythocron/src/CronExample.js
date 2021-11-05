@@ -3,29 +3,23 @@ import Typography from '@mui/material/Typography';
 import Button from "@mui/material/Button";
 import Grid from '@mui/material/Grid';
 
-class CronExample extends React.Component {
-    render() {
-        return (
-            <React.Fragment>
+export default function CronExample(props) {
+    return (
+        <React.Fragment>
 
-                <Grid item xs={2} textAlign="right">
-                    <Button size="small" onClick={event => this.props.onCronExpressionExampleClicked(this.props.cronExpression)}>
-                        {this.props.cronExpression}
-                    </Button>
-                </Grid>
+            <Grid item xs={2} textAlign="right">
+                <Button size="small" onClick={event => props.onCronExpressionExampleClicked(props.cronExpression)}>
+                    {props.cronExpression}
+                </Button>
+            </Grid>
 
-                <Grid item xs={10} >
+            <Grid item xs={10} >
 
-                    <Typography variant="body2">
-                        {this.props.cronExpressionDescription}
-                    </Typography>
-                </Grid>
+                <Typography variant="body2">
+                    {props.cronExpressionDescription}
+                </Typography>
+            </Grid>
 
-            </React.Fragment>
-
-
-
-        )
-    }
+        </React.Fragment>
+    )
 }
-export default CronExample
