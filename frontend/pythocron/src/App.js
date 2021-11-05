@@ -79,8 +79,9 @@ print("Hello pythocron!")
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid container spacing={4} p={4} >
-          <Grid item xs={4}>
+
+        <Grid container spacing={{ xs: 1, sm: 2 }} p={{ xs: 1, sm: 2 }} >
+          <Grid item xs={12} md={6} lg={4}>
             <Paper sx={{ p: 3 }}>
 
               <Cron cronExpression={this.state.cronExpression} onCronExpressionUpdate={this.handleCronExpressionUpdate} />
@@ -88,7 +89,7 @@ print("Hello pythocron!")
             </Paper>
 
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={6} lg={4}>
             <Paper sx={{ p: 3 }}>
               <Typography variant="h2" sx={{ mb: 3, textAlign: "center" }} >
                 Code
@@ -102,11 +103,13 @@ print("Hello pythocron!")
                 editorProps={{ $blockScrolling: true }}
                 value={this.state.code}
                 fontSize={16}
+                width="100%"
               />
+
 
             </Paper>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} lg={4}>
             <Paper sx={{ p: 3 }}>
               <LogsSection
                 pythocronSent={this.state.pythocronSent}
