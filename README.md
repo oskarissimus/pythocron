@@ -13,7 +13,7 @@ cd pythocron/backend
 docker build -t pythocron .
 
 # Running backend docker container
-docker run -p 8000:8000 pythocron
+docker run -d -p 8000:8000 pythocron
 
 # Go to frontend directory
 cd ../frontend/pythocron
@@ -24,6 +24,9 @@ npm install
 # Running frontend in dev mode
 npm start
 ```
+
+## Stopping
+To stop, just exit `npm start` with `ctrl-c` and than stop backend with `docker stop pythocron`
 
 ## General architecture
 ### Backend
@@ -36,3 +39,11 @@ Frontend is made in React js.
 
 ## Contributing
 Feel free to fork, create pull requests, and submit issues. This project is just starting, so there are a lot of bugs. If You find one, please create an issue, I will try to fix it!
+
+
+## Todo list
+- [ ] Create route `/{pythocron_id}` in frontend to show particular pythocron
+- [x] Display list of uploaded pythocrons
+- [ ] Handle deleting, updating and deactivating pythocrons
+- [ ] docker-compose
+- [ ] Publish to docker hub
