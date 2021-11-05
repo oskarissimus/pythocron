@@ -10,10 +10,10 @@ git clone https://github.com/oskarissimus/pythocron.git
 cd pythocron/backend
 
 # Builing backend docker image
-docker build -t pythocron .
+docker build -t pythocron-backend .
 
 # Running backend docker container
-docker run -d -p 8000:8000 pythocron
+docker run -d -p 8000:8000 pythocron-backend
 
 # Go to frontend directory
 cd ../frontend/pythocron
@@ -26,7 +26,7 @@ npm start
 ```
 
 ## Stopping
-To stop, just exit `npm start` with `ctrl-c` and than stop backend with `docker stop pythocron`
+To stop, just exit `npm start` with `ctrl-c` and than stop backend with `docker stop pythocron-backend`
 
 ## General architecture
 ### Backend
