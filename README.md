@@ -13,6 +13,10 @@ cd pythocron
 docker-compose up
 ```
 
+Than go to http://localhost:5000
+
+You can also use backend directly http://localhost:8000/docs
+
 ## Stopping
 To stop, just exit `npm start` with `ctrl-c` and than stop backend with `docker stop pythocron-backend`
 
