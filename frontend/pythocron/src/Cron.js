@@ -14,6 +14,7 @@ export default function Cron(props) {
     const handleCronExpressionUpdate = event => {
         props.onCronExpressionUpdate(event.target.value)
     }
+
     const handleCronExpressionExampleClicked = cronExpression => {
         props.onCronExpressionUpdate(cronExpression)
     }
@@ -30,6 +31,25 @@ export default function Cron(props) {
             textAlign: "center"
         }
     });
+
+    const createCronExpression = (text, description) => ({ text, description })
+
+    const cronExpressionsList = [
+        createCronExpression("* * * * *", "Every minute"),
+        createCronExpression("*/2 * * * *", "Every 2 minutes"),
+        createCronExpression("*/10 * * * *", "Every 10 minutes"),
+        createCronExpression("0 * * * *", "Every hour at minute 0"),
+        createCronExpression("17 * * * *", "Every hour at minute 17"),
+        createCronExpression("0 0 * * *", "Every day at 00:00"),
+        createCronExpression("37 21 * * *", "Every day at 21:37"),
+        createCronExpression("37 21 * * 1", "Every monday at 21:37"),
+        createCronExpression("37 21 2 * *", "Every second day of each month at 21:37"),
+        createCronExpression("37 21 2 4 *", "Every second day of april at 21:37"),
+    ];
+
+
+
+
 
     return (
         <Stack spacing={3}>
@@ -55,16 +75,10 @@ export default function Cron(props) {
                 alignItems="center"
                 columnSpacing={1}
             >
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="* * * * *" cronExpressionDescription="Every minute" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="*/2 * * * *" cronExpressionDescription="Every 2 minutes" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="*/10 * * * *" cronExpressionDescription="Every 10 minutes" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="0 * * * *" cronExpressionDescription="Every hour at minute 0" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="17 * * * *" cronExpressionDescription="Every hour at minute 17" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="0 0 * * *" cronExpressionDescription="Every day at 00:00" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="37 21 * * *" cronExpressionDescription="Every day at 21:37" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="37 21 * * 1" cronExpressionDescription="Every monday at 21:37" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="37 21 2 * *" cronExpressionDescription="Every second day of each month at 21:37" />
-                <CronExample onCronExpressionExampleClicked={handleCronExpressionExampleClicked} cronExpression="37 21 2 4 *" cronExpressionDescription="Every second day of april at 21:37" />
+                {cronExpressionsList.map(cronExpression => <CronExample
+                    onCronExpressionExampleClicked={handleCronExpressionExampleClicked}
+                    cronExpression={cronExpression.text}
+                    cronExpressionDescription={cronExpression.description} />)}
 
             </Grid>
 
