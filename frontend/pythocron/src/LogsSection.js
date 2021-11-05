@@ -7,24 +7,27 @@ import TextField from '@mui/material/TextField';
 export default function LogsSection(props) {
     const [logs, setLogs] = useState("Deploy to get logs");
 
-
-
+    // invoke setInterval only when props.enableLogsAutoRefresh is true
     useEffect(() => {
-        const interval = setInterval(() => {
-            fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${props.pythocronId}/logs`, {
-                method: "GET"
-            })
-                .then(response => {
-                    if (response.status === 200) return response.json()
-                    else if (response.status === 404) return "Wait for first code execution to see logs"
+        if (props.enableLogsAutoRefresh) {
+
+            const interval = setInterval(() => {
+                fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${props.pythocronId}/logs`, {
+                    method: "GET"
                 })
-                .then(data => {
-                    setLogs(data)
-                    console.log(data)
-                });
-        }, 1000);
-        return () => clearInterval(interval);
-    });
+
+                    .then(response => {
+                        if (response.status === 200) return response.json()
+                        else if (response.status === 404) return "Wait for first code execution to see logs"
+                    })
+                    .then(data => {
+                        setLogs(data)
+                        console.log(data)
+                    });
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [props.enableLogsAutoRefresh, props.pythocronId]);
 
 
     const LogsTextField = styled(TextField)({

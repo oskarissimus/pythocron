@@ -57,7 +57,7 @@ print("Hello pythocron!")
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ loading: false, pythocronUploadSuccess: true, pythocronId: data.pythocron_id })
+        this.setState({ loading: false, pythocronUploadSuccess: true, pythocronId: data.pythocron_id, enableLogsAutoRefresh: true })
         console.log(data)
       });
   }
