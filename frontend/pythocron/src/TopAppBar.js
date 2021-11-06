@@ -48,8 +48,8 @@ export default function TopAppBar() {
                         >
                             <MenuIcon onClick={toggleDrawer(anchor, true)} />
                         </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            News
+                        <Typography component="h1" sx={{ fontSize: { xs: 15, sm: 20 }, fontFamily: "monospace", flexGrow: 1 }}>
+                            Python + Cron = Pythocron
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
