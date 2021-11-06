@@ -144,7 +144,7 @@ print("Hello pythocron!")
                   loading={this.state.loading}
                   variant="contained"
                   color="primary"
-                  sx={{ width: 1, fontSize: 100 }}
+                  sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}
                   loadingIndicator={<CircularProgress color="inherit" size={200} />}
                 >
                   Update
@@ -158,7 +158,7 @@ print("Hello pythocron!")
                   loading={this.state.loading}
                   variant="contained"
                   color="error"
-                  sx={{ width: 1, fontSize: 100 }}
+                  sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}
                   loadingIndicator={<CircularProgress color="inherit" size={200} />}
                 >
                   Delete
