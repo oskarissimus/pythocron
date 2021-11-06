@@ -50,4 +50,4 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 - [ ] Publish to docker hub
 - [ ] Unit testing for backend
 - [ ] Configure github actions to automathically build test and push to docker hub
-- [x] Responsive design 
+- [x] Responsive design

@@ -40,7 +40,7 @@ export default function LogsSection(props) {
     return (
         <React.Fragment>
 
-            <Typography variant="h2" sx={{ mb: 3, textAlign: "center" }} >
+            <Typography variant="h2" sx={{ mb: 3, textAlign: { xs: "left", sm: "center" } }} >
                 Logs
             </Typography>
             {props.pythocronSent && props.pythocronUploadSuccess &&

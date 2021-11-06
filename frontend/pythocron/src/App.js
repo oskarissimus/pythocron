@@ -1,7 +1,7 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -15,14 +15,14 @@ import Cron from "./Cron"
 import LogsSection from './LogsSection';
 
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     background: {
       default: '#eee',
     },
-  }
+  },
 });
-
+theme = responsiveFontSizes(theme);
 
 class App extends React.Component {
   constructor(props) {
@@ -91,7 +91,7 @@ print("Hello pythocron!")
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Paper sx={{ p: 3 }}>
-              <Typography variant="h2" sx={{ mb: 3, textAlign: "center" }} >
+              <Typography variant="h2" sx={{ mb: 3, textAlign: { xs: "left", sm: "center" } }} >
                 Code
               </Typography>
 
@@ -126,7 +126,7 @@ print("Hello pythocron!")
                 loading={this.state.loading}
                 variant="contained"
                 color={this.buttonColorSwitch(this.state.pythocronSent, this.state.pythocronUploadSuccess)}
-                sx={{ width: 1, fontSize: 200 }}
+                sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 200 } }}
                 onClick={this.handleDeployClicked}
                 loadingIndicator={<CircularProgress color="inherit" size={200} />}
               >

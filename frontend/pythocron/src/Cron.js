@@ -19,18 +19,32 @@ export default function Cron(props) {
         props.onCronExpressionUpdate(cronExpression)
     }
 
-    const CronExpressionInput = styled(TextField)({
+    const CronExpressionInput = styled(TextField)(({ theme }) => ({
         '& .MuiInputBase-input': {
-            fontSize: 40,
-            fontFamily: "monospace",
-            textAlign: "center"
+            [theme.breakpoints.up('xs')]: {
+                fontSize: 20,
+                fontFamily: "monospace",
+                textAlign: "center"
+            },
+            [theme.breakpoints.up('sm')]: {
+                fontSize: 40,
+                fontFamily: "monospace",
+                textAlign: "center"
+            }
         },
         '& .MuiFormHelperText-root': {
-            fontSize: 20,
-            fontFamily: "monospace",
-            textAlign: "center"
+            [theme.breakpoints.up('xs')]: {
+                fontSize: 15,
+                fontFamily: "monospace",
+                textAlign: "left"
+            },
+            [theme.breakpoints.up('sm')]: {
+                fontSize: 20,
+                fontFamily: "monospace",
+                textAlign: "center"
+            }
         }
-    });
+    }));
 
     const createCronExpression = (text, description) => ({ text, description })
 
@@ -53,14 +67,14 @@ export default function Cron(props) {
 
     return (
         <Stack spacing={3}>
-            <Typography variant="h2" sx={{ textAlign: "center" }} >
+            <Typography variant="h2" sx={{ mb: 3, textAlign: { xs: "left", sm: "center" } }} >
+
                 Cron
             </Typography>
 
             <CronExpressionInput
                 label="Cron expression"
                 variant="outlined"
-                sx={{ width: 1, fontFamily: "monospace", fontSize: 200 }}
                 value={props.cronExpression}
                 onChange={handleCronExpressionUpdate}
                 helperText={cronstrue.toString(props.cronExpression, { verbose: true, use24HourTimeFormat: true })}
@@ -83,6 +97,6 @@ export default function Cron(props) {
             </Grid>
 
 
-        </Stack>
+        </Stack >
     )
 }
