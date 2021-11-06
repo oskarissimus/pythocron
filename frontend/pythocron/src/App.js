@@ -126,7 +126,7 @@ print("Hello pythocron!")
                 loading={this.state.loading}
                 variant="contained"
                 color={this.buttonColorSwitch(this.state.pythocronSent, this.state.pythocronUploadSuccess)}
-                sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 200 } }}
+                sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 150, lg: 200 } }}
                 onClick={this.handleDeployClicked}
                 loadingIndicator={<CircularProgress color="inherit" size={200} />}
               >
