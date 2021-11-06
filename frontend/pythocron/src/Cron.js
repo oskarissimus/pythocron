@@ -56,9 +56,9 @@ export default function Cron(props) {
         createCronExpression("17 * * * *", "Every hour at minute 17"),
         createCronExpression("0 0 * * *", "Every day at 00:00"),
         createCronExpression("37 21 * * *", "Every day at 21:37"),
-        createCronExpression("37 21 * * 1", "Every monday at 21:37"),
         createCronExpression("37 21 2 * *", "Every second day of each month at 21:37"),
         createCronExpression("37 21 2 4 *", "Every second day of april at 21:37"),
+        createCronExpression("37 21 * * 1", "Every monday at 21:37"),
     ];
 
 
