@@ -38,8 +38,9 @@ export default function TopAppBar() {
                             color="inherit"
                             aria-label="menu"
                             sx={{ mr: 2 }}
+                            onClick={toggleDrawer(anchor, true)}
                         >
-                            <MenuIcon onClick={toggleDrawer(anchor, true)} />
+                            <MenuIcon />
                         </IconButton>
                         <Typography component="h1" sx={{ fontSize: { xs: 15, sm: 20 }, fontFamily: "monospace", flexGrow: 1 }}>
                             Python + Cron = Pythocron

@@ -90,6 +90,7 @@ export default function Cron(props) {
                 columnSpacing={1}
             >
                 {cronExpressionsList.map(cronExpression => <CronExample
+                    key={cronExpression.text}
                     onCronExpressionExampleClicked={handleCronExpressionExampleClicked}
                     cronExpression={cronExpression.text}
                     cronExpressionDescription={cronExpression.description} />)}
