@@ -13,6 +13,7 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-github";
 import Cron from "./Cron"
 import LogsSection from './LogsSection';
+import TopAppBar from './TopAppBar';
 
 
 let theme = createTheme({
@@ -79,7 +80,7 @@ print("Hello pythocron!")
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
+        <TopAppBar />
         <Grid container spacing={{ xs: 1, sm: 2 }} p={{ xs: 1, sm: 2 }} >
           <Grid item xs={12} md={6} lg={4}>
             <Paper sx={{ p: 3 }}>
