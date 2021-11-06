@@ -1,8 +1,6 @@
 import React from 'react';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/theme-github";
 import TopAppBar from './TopAppBar';
 import AddPythocron from './AddPythocron';
 
