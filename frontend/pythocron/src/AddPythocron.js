@@ -24,7 +24,6 @@ print("Hello pythocron!")
             pythocronSent: false,
             pythocronUploadSuccess: false,
             pythocronId: null,
-            enableLogsAutoRefresh: false
         }
     }
 
@@ -61,22 +60,20 @@ print("Hello pythocron!")
 
     }
     render() {
-
-
         return (
             <Grid container spacing={{ xs: 1, sm: 2 }} p={{ xs: 1, sm: 2 }} >
                 <Grid item xs={12} md={6} lg={4}>
                     <Paper sx={{ p: 3 }}>
-
-                        <CronSection cronExpression={this.state.cronExpression} onCronExpressionUpdate={this.handleCronExpressionUpdate} />
-
+                        <CronSection
+                            cronExpression={this.state.cronExpression}
+                            onCronExpressionUpdate={this.handleCronExpressionUpdate} />
                     </Paper>
-
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
                     <Paper sx={{ p: 3 }}>
-                        <CodeSection code={this.state.code} onCodeChange={this.onCodeChange} />
-
+                        <CodeSection
+                            code={this.state.code}
+                            onCodeChange={this.onCodeChange} />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} lg={4}>
@@ -85,11 +82,10 @@ print("Hello pythocron!")
                             pythocronSent={this.state.pythocronSent}
                             pythocronUploadSuccess={this.state.pythocronUploadSuccess}
                             pythocronId={this.state.pythocronId}
-                            enableLogsAutoRefresh={this.state.enableLogsAutoRefresh}
+                            enableLogsAutoRefresh={false}
                         />
                     </Paper>
                 </Grid>
-
                 <Grid item xs={12}>
                     <Collapse in={!this.state.pythocronUploadSuccess}>
                         <LoadingButton
@@ -104,45 +100,7 @@ print("Hello pythocron!")
                         </LoadingButton>
                     </Collapse>
                 </Grid>
-
-                <React.Fragment>
-
-                    <Grid item xs={6}>
-                        <Collapse in={this.state.pythocronSent && this.state.pythocronUploadSuccess}>
-
-                            <LoadingButton
-                                loading={this.state.loading}
-                                variant="contained"
-                                color="primary"
-                                sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}
-                                loadingIndicator={<CircularProgress color="inherit" size={200} />}
-                            >
-                                Update
-                            </LoadingButton>
-                        </Collapse>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Collapse in={this.state.pythocronSent && this.state.pythocronUploadSuccess}>
-
-                            <LoadingButton
-                                loading={this.state.loading}
-                                variant="contained"
-                                color="error"
-                                sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}
-                                loadingIndicator={<CircularProgress color="inherit" size={200} />}
-                            >
-                                Delete
-                            </LoadingButton>
-                        </Collapse>
-
-                    </Grid>
-
-
-                </React.Fragment>
-
-
             </Grid>
-
         );
     }
 }
