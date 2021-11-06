@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
@@ -8,8 +8,19 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuContents from './MenuContents';
+import { Link } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
 
-export default function TopAppBar() {
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: inherit;
+    }
+`;
+
+export default function TopAppBar(props) {
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -42,9 +53,20 @@ export default function TopAppBar() {
                         >
                             <MenuIcon />
                         </IconButton>
+
                         <Typography component="h1" sx={{ fontSize: { xs: 15, sm: 20 }, fontFamily: "monospace", flexGrow: 1 }}>
-                            Python + Cron = Pythocron
+                            {!props.pythocronId &&
+                                <StyledLink style={{ textDecoration: 'none' }} to="/">
+                                    Python + Cron = Pythocron
+                                </StyledLink>
+                            }
+                            {props.pythocronId &&
+                                <React.Fragment>
+                                    <StyledLink to="/">Pythocron:</StyledLink> {props.pythocronId}
+                                </React.Fragment>
+                            }
                         </Typography>
+
                         <Button color="inherit">Login</Button>
                     </Toolbar>
                 </AppBar>

@@ -43,7 +43,7 @@ export default function LogsSection(props) {
             <Typography variant="h2" sx={{ mb: 3, textAlign: { xs: "left", sm: "center" } }} >
                 Logs
             </Typography>
-            {props.pythocronSent && props.pythocronUploadSuccess &&
+            {props.enableLogsAutoRefresh &&
                 <Typography variant="body2">
 
                     get logs in raw format from:&nbsp;

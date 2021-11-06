@@ -5,6 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CodeIcon from '@mui/icons-material/Code';
+import { Link } from "react-router-dom";
 
 export default function MenuContents(props) {
     const text = "Pythocrons list"
@@ -41,7 +42,7 @@ export default function MenuContents(props) {
                 </ListItem>
                 <List>
                     {pythocronsList.map(pythocronId => (
-                        <ListItem sx={{ pl: 4 }} button key={pythocronId}>
+                        <ListItem sx={{ pl: 4 }} button key={pythocronId} component={Link} to={`/${pythocronId}`}>
                             <ListItemIcon>
                                 <CodeIcon />
                             </ListItemIcon>

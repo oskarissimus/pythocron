@@ -8,6 +8,8 @@ import Collapse from '@mui/material/Collapse';
 import CronSection from "./CronSection"
 import LogsSection from './LogsSection';
 import CodeSection from './CodeSection';
+import TopAppBar from './TopAppBar';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddPythocron(props) {
     const [code, setCode] = React.useState(`from datetime import datetime
@@ -19,7 +21,7 @@ print("Hello pythocron!")
     const [pythocronSent, setPythocronSent] = React.useState(false)
     const [pythocronUploadSuccess, setPythocronUploadSuccess] = React.useState(false)
     const [pythocronId, setPythocronId] = React.useState(null)
-    const [enableLogsAutoRefresh, setEnableLogsAutoRefresh] = React.useState(false)
+    let navigate = useNavigate();
 
     const handleDeployClicked = () => {
         setLoading(true)
@@ -41,62 +43,55 @@ print("Hello pythocron!")
                 setLoading(false)
                 setPythocronUploadSuccess(true)
                 setPythocronId(data.pythocron_id)
-                setEnableLogsAutoRefresh(true)
+                navigate(`/${data.pythocron_id}`);
+
                 console.log(data)
             });
     }
-    const onCodeChange = (code) => {
-        setCode(code)
-    }
-    const handleCronExpressionUpdate = (cronExpression) => {
-        setCronExpression(cronExpression)
-    }
-    const buttonColorSwitch = (pythocronSent, pythocronUploadSuccess) => {
-        if (pythocronSent && pythocronUploadSuccess) return "success"
-        else if (pythocronSent && !pythocronUploadSuccess) return "error"
-        else return "secondary"
 
-    }
+
     return (
-        <Grid container spacing={{ xs: 1, sm: 2 }} p={{ xs: 1, sm: 2 }} >
-            <Grid item xs={12} md={6} lg={4}>
-                <Paper sx={{ p: 3 }}>
-                    <CronSection
-                        cronExpression={cronExpression}
-                        onCronExpressionUpdate={handleCronExpressionUpdate} />
-                </Paper>
+        <React.Fragment>
+            <TopAppBar />
+
+            <Grid container spacing={{ xs: 1, sm: 2 }} p={{ xs: 1, sm: 2 }} >
+                <Grid item xs={12} md={6} lg={4}>
+                    <Paper sx={{ p: 3 }}>
+                        <CronSection
+                            cronExpression={cronExpression}
+                            onCronExpressionUpdate={setCronExpression} />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                    <Paper sx={{ p: 3 }}>
+                        <CodeSection
+                            code={code}
+                            onCodeChange={setCode} />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} lg={4}>
+                    <Paper sx={{ p: 3 }}>
+                        <LogsSection
+                            pythocronId={pythocronId}
+                            enableLogsAutoRefresh={false}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Collapse in={!pythocronUploadSuccess}>
+                        <LoadingButton
+                            loading={loading}
+                            variant="contained"
+                            color="secondary"
+                            sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 150, lg: 200 } }}
+                            onClick={handleDeployClicked}
+                            loadingIndicator={<CircularProgress color="inherit" size={200} />}
+                        >
+                            Deploy
+                        </LoadingButton>
+                    </Collapse>
+                </Grid>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-                <Paper sx={{ p: 3 }}>
-                    <CodeSection
-                        code={code}
-                        onCodeChange={onCodeChange} />
-                </Paper>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-                <Paper sx={{ p: 3 }}>
-                    <LogsSection
-                        pythocronSent={pythocronSent}
-                        pythocronUploadSuccess={pythocronUploadSuccess}
-                        pythocronId={pythocronId}
-                        enableLogsAutoRefresh={enableLogsAutoRefresh}
-                    />
-                </Paper>
-            </Grid>
-            <Grid item xs={12}>
-                <Collapse in={!pythocronUploadSuccess}>
-                    <LoadingButton
-                        loading={loading}
-                        variant="contained"
-                        color={buttonColorSwitch(pythocronSent, pythocronUploadSuccess)}
-                        sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 150, lg: 200 } }}
-                        onClick={handleDeployClicked}
-                        loadingIndicator={<CircularProgress color="inherit" size={200} />}
-                    >
-                        Deploy
-                    </LoadingButton>
-                </Collapse>
-            </Grid>
-        </Grid>
+        </React.Fragment>
     );
 }
