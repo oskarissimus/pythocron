@@ -1,16 +1,13 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from '@mui/material/CircularProgress';
 import Collapse from '@mui/material/Collapse';
-import AceEditor from "react-ace";
 
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/theme-github";
-import Cron from "./Cron"
+import CronSection from "./CronSection"
 import LogsSection from './LogsSection';
+import CodeSection from './CodeSection';
 
 
 
@@ -71,28 +68,14 @@ print("Hello pythocron!")
                 <Grid item xs={12} md={6} lg={4}>
                     <Paper sx={{ p: 3 }}>
 
-                        <Cron cronExpression={this.state.cronExpression} onCronExpressionUpdate={this.handleCronExpressionUpdate} />
+                        <CronSection cronExpression={this.state.cronExpression} onCronExpressionUpdate={this.handleCronExpressionUpdate} />
 
                     </Paper>
 
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
                     <Paper sx={{ p: 3 }}>
-                        <Typography variant="h2" sx={{ mb: 3, textAlign: { xs: "left", sm: "center" } }} >
-                            Code
-                        </Typography>
-
-                        <AceEditor
-                            mode="python"
-                            theme="github"
-                            onChange={this.onCodeChange}
-                            name="UNIQUE_ID_OF_DIV"
-                            editorProps={{ $blockScrolling: true }}
-                            value={this.state.code}
-                            fontSize={16}
-                            width="100%"
-                        />
-
+                        <CodeSection code={this.state.code} onCodeChange={this.onCodeChange} />
 
                     </Paper>
                 </Grid>

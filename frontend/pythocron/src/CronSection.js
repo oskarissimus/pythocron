@@ -9,7 +9,7 @@ import cronstrue from 'cronstrue';
 
 
 
-export default function Cron(props) {
+export default function CronSection(props) {
 
     const handleCronExpressionUpdate = event => {
         props.onCronExpressionUpdate(event.target.value)
