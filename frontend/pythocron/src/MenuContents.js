@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import CodeIcon from '@mui/icons-material/Code';
-import { Link } from "react-router-dom";
 
 export default function MenuContents(props) {
     const text = "Pythocrons list"
@@ -22,7 +23,6 @@ export default function MenuContents(props) {
             .then(response => response.json())
             .then(data => {
                 setPythocronsList(data)
-                console.log(data)
             });
     }, [])
     return (

@@ -8,23 +8,28 @@ export default function LogsSection(props) {
     const [logs, setLogs] = useState("Deploy to get logs");
 
     // invoke setInterval only when props.enableLogsAutoRefresh is true
+
+
     useEffect(() => {
-        if (props.enableLogsAutoRefresh) {
 
-            const interval = setInterval(() => {
-                fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${props.pythocronId}/logs`, {
-                    method: "GET"
+
+        function fetchLogs() {
+            fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${props.pythocronId}/logs`, {
+                method: "GET"
+            })
+                .then(response => {
+                    if (response.status === 200) return response.json()
+                    else if (response.status === 404) return "Wait for first code execution to see logs"
                 })
+                .then(data => {
+                    setLogs(data)
+                });
+        }
 
-                    .then(response => {
-                        if (response.status === 200) return response.json()
-                        else if (response.status === 404) return "Wait for first code execution to see logs"
-                    })
-                    .then(data => {
-                        setLogs(data)
-                        console.log(data)
-                    });
-            }, 1000);
+
+        if (props.enableLogsAutoRefresh) {
+            fetchLogs()
+            const interval = setInterval(fetchLogs, 10000);
             return () => clearInterval(interval);
         }
     }, [props.enableLogsAutoRefresh, props.pythocronId]);

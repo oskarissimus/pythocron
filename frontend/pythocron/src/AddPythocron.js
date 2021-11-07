@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CircularProgress from '@mui/material/CircularProgress';
-import Collapse from '@mui/material/Collapse';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import CronSection from "./CronSection"
 import LogsSection from './LogsSection';
 import CodeSection from './CodeSection';
 import TopAppBar from './TopAppBar';
-import { useNavigate } from 'react-router-dom';
+import { getAttrFromLocationState } from './utils';
+
 
 export default function AddPythocron(props) {
     const [code, setCode] = React.useState(`from datetime import datetime
 print(datetime.now())
 print("Hello pythocron!")
 `)
-    const [cronExpression, setCronExpression] = React.useState("* * * * *")
-    const [loading, setLoading] = React.useState(false)
-    const [pythocronSent, setPythocronSent] = React.useState(false)
-    const [pythocronUploadSuccess, setPythocronUploadSuccess] = React.useState(false)
-    const [pythocronId, setPythocronId] = React.useState(null)
+    const [cronExpression, setCronExpression] = useState("* * * * *")
+    const [loading, setLoading] = useState(false)
+    // const [pythocronSent, setPythocronSent] = useState(false)
+    // const [pythocronUploadSuccess, setPythocronUploadSuccess] = useState(false)
+    const [pythocronId, setPythocronId] = useState(null)
+    // const [deploySnackbarOpen, setDeploySnackbarOpen] = useState(false)
+    const [deleteSuccessSnackbarOpen, setDeleteSuccessSnackbarOpen] = useState(true)
     let navigate = useNavigate();
+    let location = useLocation();
+    // console.log(location)
 
     const handleDeployClicked = () => {
         setLoading(true)
-        setPythocronSent(true)
+        // setPythocronSent(true)
         const data = {
             script: code,
             schedule: cronExpression
@@ -41,14 +49,14 @@ print("Hello pythocron!")
             .then(response => response.json())
             .then(data => {
                 setLoading(false)
-                setPythocronUploadSuccess(true)
+                // setPythocronUploadSuccess(true)
                 setPythocronId(data.pythocron_id)
-                navigate(`/${data.pythocron_id}`);
+                // setDeploySnackbarOpen(true)
+                navigate(`/${data.pythocron_id}`, { state: { deploySuccessSnackbarOpen: true } });
 
                 console.log(data)
             });
     }
-
 
     return (
         <React.Fragment>
@@ -78,20 +86,27 @@ print("Hello pythocron!")
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
-                    <Collapse in={!pythocronUploadSuccess}>
-                        <LoadingButton
-                            loading={loading}
-                            variant="contained"
-                            color="secondary"
-                            sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 150, lg: 200 } }}
-                            onClick={handleDeployClicked}
-                            loadingIndicator={<CircularProgress color="inherit" size={200} />}
-                        >
-                            Deploy
-                        </LoadingButton>
-                    </Collapse>
+                    <LoadingButton
+                        loading={loading}
+                        variant="contained"
+                        color="secondary"
+                        sx={{ width: 1, fontSize: { xs: 50, sm: 100, md: 150, lg: 200 } }}
+                        onClick={handleDeployClicked}
+                        loadingIndicator={<CircularProgress color="inherit" size={200} />}
+                    >
+                        Deploy
+                    </LoadingButton>
+
                 </Grid>
             </Grid>
+            <Snackbar
+                open={getAttrFromLocationState(location.state, "deleteSuccessSnackbarOpen") && deleteSuccessSnackbarOpen}
+            >
+                <Alert onClose={() => setDeleteSuccessSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
+                    Your pythocron was deleted successfully!
+                </Alert>
+            </Snackbar>
+
         </React.Fragment>
     );
 }
