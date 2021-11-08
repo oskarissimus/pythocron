@@ -116,6 +116,27 @@ def delete_pythocron(
     return {"deleted": {"pythocron_id": pythocron_id}}
 
 
+@app.put("/pythocrons/{pythocron_id}")
+def update_pythocron(
+    pythocron: schemas.Pythocron,
+    settings: config.Settings = Depends(get_settings),
+):
+
+    pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron.id}.py"
+
+    with open(pythocron_scriptfile_path, "w") as pythocron_scriptfile:
+        pythocron_scriptfile.write(pythocron.script)
+
+    cron = CronTab(user="root")
+    pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron.id)
+    pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
+    if len(pythocron_jobs_matching_id_list) == 0:
+        raise HTTPException(status_code=404, detail="Pythocron not found")
+    elif len(pythocron_jobs_matching_id_list) == 1:
+        pythocron_jobs_matching_id_list[0].setall(pythocron.schedule)
+        cron.write()
+        return {"updated": {"pythocron_id": pythocron.id}}
+
 @app.get("/pythocrons/{pythocron_id}/logs")
 def read_pythocron_logs(
     pythocron_id,
