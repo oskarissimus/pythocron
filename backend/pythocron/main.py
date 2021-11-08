@@ -25,10 +25,8 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup_event():
-    pathlib.Path(get_settings().logs_dir_path).mkdir(
-        parents=True, exist_ok=True)
-    pathlib.Path(get_settings().scripts_dir_path).mkdir(
-        parents=True, exist_ok=True)
+    pathlib.Path(get_settings().logs_dir_path).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(get_settings().scripts_dir_path).mkdir(parents=True, exist_ok=True)
 
 
 @app.get("/")
@@ -54,8 +52,7 @@ def read_pythocron(
         pythocron_scriptfile_contents = open(pythocron_scriptfile_path).read()
         cron = CronTab(user="root")
         pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron_id)
-        pythocron_jobs_matching_id_list = [
-            *pythocron_jobs_matching_id_iterator]
+        pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
         if len(pythocron_jobs_matching_id_list) == 0:
             raise HTTPException(status_code=404, detail="Pythocron not found")
         elif len(pythocron_jobs_matching_id_list) == 1:
@@ -118,24 +115,26 @@ def delete_pythocron(
 
 @app.put("/pythocrons/{pythocron_id}")
 def update_pythocron(
-    pythocron: schemas.Pythocron,
+    pythocron_id: str,
+    pythocron: schemas.PythocronUpdate,
     settings: config.Settings = Depends(get_settings),
 ):
 
-    pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron.id}.py"
+    pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
 
     with open(pythocron_scriptfile_path, "w") as pythocron_scriptfile:
         pythocron_scriptfile.write(pythocron.script)
 
     cron = CronTab(user="root")
-    pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron.id)
+    pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron_id)
     pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
     if len(pythocron_jobs_matching_id_list) == 0:
         raise HTTPException(status_code=404, detail="Pythocron not found")
     elif len(pythocron_jobs_matching_id_list) == 1:
         pythocron_jobs_matching_id_list[0].setall(pythocron.schedule)
         cron.write()
-        return {"updated": {"pythocron_id": pythocron.id}}
+        return {"updated": {"pythocron_id": pythocron_id}}
+
 
 @app.get("/pythocrons/{pythocron_id}/logs")
 def read_pythocron_logs(

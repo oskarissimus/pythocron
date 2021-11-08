@@ -29,6 +29,7 @@ print("Hello pythocron!")
     const [cronExpression, setCronExpression] = useState("* * * * *")
     const [deploySuccessSnackbarOpen, setDeploySuccessSnackbarOpen] = useState(true)
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [updateSuccessSnackbarOpen, setUpdateSuccessSnackbarOpen] = useState(false);
     let { pythocronId } = useParams();
     let navigate = useNavigate();
     let location = useLocation();
@@ -37,7 +38,8 @@ print("Hello pythocron!")
 
 
 
-    // call fetchPythocronData after component mounts
+
+    // call fetchPythocronData only once when component mounts
     useEffect(() => {
         function fetchPythocronData() {
             fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${pythocronId}`, {
@@ -53,7 +55,8 @@ print("Hello pythocron!")
                 })
         };
         fetchPythocronData();
-    });
+    }, [pythocronId]);
+
 
 
     if (!pythocronId) {
@@ -74,6 +77,26 @@ print("Hello pythocron!")
                 navigate(`/`, { state: { deleteSuccessSnackbarOpen: true } })
             });
     }
+
+    const handleUpdateClicked = () => {
+        fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${pythocronId}`, {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+
+            },
+            method: "PUT",
+            body: JSON.stringify({
+                script: code,
+                schedule: cronExpression
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUpdateSuccessSnackbarOpen(true)
+            });
+    }
+
 
     return (
         <React.Fragment>
@@ -105,7 +128,9 @@ print("Hello pythocron!")
                     <Button
                         variant="contained"
                         color="primary"
-                        sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}>
+                        sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}
+                        onClick={handleUpdateClicked}>
+
                         Update
                     </Button>
 
@@ -162,6 +187,19 @@ print("Hello pythocron!")
                     Your pythocron was deployed successfully!
                 </Alert>
             </Snackbar>
+            <Snackbar
+                open={updateSuccessSnackbarOpen}
+                onClose={() => setUpdateSuccessSnackbarOpen(false)}
+                autoHideDuration={10000}>
+                <Alert
+                    onClose={() => setUpdateSuccessSnackbarOpen(false)}
+                    severity="success"
+                    sx={{ width: '100%' }}>
+                    Your pythocron was updated successfully!
+                </Alert>
+            </Snackbar>
+
+
         </React.Fragment>
     );
 }

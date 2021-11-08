@@ -12,5 +12,9 @@ class PythocronCreate(PythocronBase):
     pass
 
 
+class PythocronUpdate(PythocronBase):
+    pass
+
+
 class Pythocron(PythocronBase):
     id: str

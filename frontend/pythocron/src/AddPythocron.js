@@ -22,18 +22,13 @@ print("Hello pythocron!")
 `)
     const [cronExpression, setCronExpression] = useState("* * * * *")
     const [loading, setLoading] = useState(false)
-    // const [pythocronSent, setPythocronSent] = useState(false)
-    // const [pythocronUploadSuccess, setPythocronUploadSuccess] = useState(false)
     const [pythocronId, setPythocronId] = useState(null)
-    // const [deploySnackbarOpen, setDeploySnackbarOpen] = useState(false)
     const [deleteSuccessSnackbarOpen, setDeleteSuccessSnackbarOpen] = useState(true)
     let navigate = useNavigate();
     let location = useLocation();
-    // console.log(location)
 
     const handleDeployClicked = () => {
         setLoading(true)
-        // setPythocronSent(true)
         const data = {
             script: code,
             schedule: cronExpression
@@ -49,9 +44,7 @@ print("Hello pythocron!")
             .then(response => response.json())
             .then(data => {
                 setLoading(false)
-                // setPythocronUploadSuccess(true)
                 setPythocronId(data.pythocron_id)
-                // setDeploySnackbarOpen(true)
                 navigate(`/${data.pythocron_id}`, { state: { deploySuccessSnackbarOpen: true } });
 
                 console.log(data)
