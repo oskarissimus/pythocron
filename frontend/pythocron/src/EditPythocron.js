@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 import Paper from '@mui/material/Paper';
@@ -29,23 +29,36 @@ print("Hello pythocron!")
     const [cronExpression, setCronExpression] = useState("* * * * *")
     const [deploySuccessSnackbarOpen, setDeploySuccessSnackbarOpen] = useState(true)
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-
-    const handleDeleteClicked = () => {
-        setShowDeleteConfirmation(true);
-    };
-
     let { pythocronId } = useParams();
     let navigate = useNavigate();
     let location = useLocation();
+
+
+
+
+
+    // call fetchPythocronData after component mounts
+    useEffect(() => {
+        function fetchPythocronData() {
+            fetch(`${process.env.REACT_APP_PYTHOCRON_BACKEND_URL}/pythocrons/${pythocronId}`, {
+                headers: {
+                    Accept: "application/json"
+                },
+                method: "GET"
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setCode(data.script)
+                    setCronExpression(data.schedule)
+                })
+        };
+        fetchPythocronData();
+    });
+
+
     if (!pythocronId) {
         return <NoMatch />;
     }
-
-    const handleCancelDeleteClicked = () => {
-        setShowDeleteConfirmation(false);
-
-    }
-
 
     const handleConfirmDeleteClicked = () => {
         setShowDeleteConfirmation(false);
@@ -65,7 +78,6 @@ print("Hello pythocron!")
     return (
         <React.Fragment>
             <TopAppBar pythocronId={pythocronId} />
-
             <Grid container spacing={{ xs: 1, sm: 2 }} p={{ xs: 1, sm: 2 }} >
                 <Grid item xs={12} md={6} lg={4}>
                     <Paper sx={{ p: 3 }}>
@@ -103,7 +115,7 @@ print("Hello pythocron!")
 
                     <Dialog
                         open={showDeleteConfirmation}
-                        onClose={handleCancelDeleteClicked}
+                        onClose={() => setShowDeleteConfirmation(false)}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description">
                         <DialogTitle id="alert-dialog-title">
@@ -115,7 +127,7 @@ print("Hello pythocron!")
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleCancelDeleteClicked} autoFocus >Cancel</Button>
+                            <Button onClick={() => setShowDeleteConfirmation(false)} autoFocus >Cancel</Button>
                             <Button onClick={handleConfirmDeleteClicked} >Confirm</Button>
                         </DialogActions>
                     </Dialog>
@@ -133,7 +145,7 @@ print("Hello pythocron!")
                         variant="contained"
                         color="error"
                         sx={{ width: 1, fontSize: { xs: 40, sm: 60, md: 80, lg: 100 } }}
-                        onClick={handleDeleteClicked}>
+                        onClick={() => setShowDeleteConfirmation(true)}>
                         Delete
                     </Button>
 
