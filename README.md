@@ -48,7 +48,8 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 - [x] Handle deleting pythocrons
 - [x] docker-compose
 - [x] Responsive design
-- [ ] Handle updating and deactivating pythocrons
+- [x] Handle updating pythocrons
+- [ ] Handle deactivating pythocrons
 - [ ] Publish to docker hub
 - [ ] Unit testing for backend
 - [ ] Configure github actions to automathically build test and push to docker hub
