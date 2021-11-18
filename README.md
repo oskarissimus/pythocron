@@ -2,7 +2,6 @@
 
 Purpose of this project is to enable simple scheduled code execution. It's like cloud functions + scheduler with jupyter-notebook-like interface and user-friendliness.
 
-[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?dir=frontend)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Running
@@ -89,7 +88,8 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 - [x] docker-compose
 - [x] Responsive design
 - [x] Handle updating pythocrons
-- [ ] Handle deactivating pythocrons
-- [ ] Publish to docker hub
+- [x] Publish to docker hub
+- [x] Configure github actions to automathically build and push to docker hub
 - [ ] Unit testing for backend
-- [ ] Configure github actions to automathically build test and push to docker hub
+- [ ] Handle deactivating pythocrons
+- [ ] Configure github actions to run tests
