@@ -20,7 +20,14 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: Build the Docker images
       run: |
-        docker build backend --tag ${{ env.BACKEND_TAG }}:latest
+        export TS=$(date +%s)
+        docker build frontend --tag ${{ env.FRONTEND_TAG }}:$TS
+        docker build backend --tag ${{ env.BACKEND_TAG }}:$TS
+        docker tag ${{ env.FRONTEND_TAG }}:$TS ${{ env.FRONTEND_TAG }}:latest
+        docker tag ${{ env.BACKEND_TAG }}:$TS ${{ env.BACKEND_TAG }}:latest
+        docker push ${{ env.FRONTEND_TAG }}:$TS
+        docker push ${{ env.BACKEND_TAG }}:$TS
+        docker push ${{ env.FRONTEND_TAG }}:latest
         docker push ${{ env.BACKEND_TAG }}:latest
