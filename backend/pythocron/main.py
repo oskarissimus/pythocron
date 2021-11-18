@@ -13,7 +13,7 @@ def get_settings():
 
 app = FastAPI()
 
-origins = ["http://localhost:3000", "http://localhost:5000"]
+origins = ["http://localhost:3000", "http://localhost:5000", "http://www.pythoncron.com", "http://pythoncron.com"]
 
 app.add_middleware(
     CORSMiddleware,
