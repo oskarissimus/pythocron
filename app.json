@@ -1,3 +1,4 @@
 {
-    "name": "Pythocron"
+    "name": "Pythocron",
+    "stack": "container"
 }
