@@ -4,6 +4,25 @@ Purpose of this project is to enable simple scheduled code execution. It's like 
 
 
 ## Running
+Create `docker-compose.yml` file with below contents:
+```
+version: "3.0"
+services:
+  backend:
+    image: oskarissimus/pythocron-backend
+    ports:
+      - "8000:8000"
+  frontend:
+    image: oskarissimus/pythocron-frontend
+    ports:
+      - "5000:5000"
+```
+
+Than run:
+```
+docker-compose up
+```
+## Building docker images from repo
 ```
 # Cloning repo
 git clone https://github.com/oskarissimus/pythocron.git
