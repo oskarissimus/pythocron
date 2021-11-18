@@ -1,0 +1,4 @@
+build:
+  docker:
+    backend: backend/Dockerfile
+    frontend: frontend/Dockerfile
