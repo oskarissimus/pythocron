@@ -36,8 +36,27 @@ Than go to http://localhost:5000
 
 You can also use backend directly http://localhost:8000/docs
 
-## Stopping
-To stop, just exit `npm start` with `ctrl-c` and than stop backend with `docker stop pythocron-backend`
+## Running dev
+### backend
+```
+# please use virtual envs for own sanity
+cd backend
+mkvirtualenv pythocron
+pip install -r requrements.txt
+poetry isntall
+poetry run uvicorn pythocron.main:app --host=0.0.0.0 --reload
+# project uses crontab as root, so have that in mind while running dev
+```
+### frontend
+```
+cd frontend
+# Installing frontend dependencies
+npm install
+
+# Running frontend in dev mode
+npm start
+```
+To stop, just exit `npm start` with `ctrl-c`
 
 ## General architecture
 ### Backend
