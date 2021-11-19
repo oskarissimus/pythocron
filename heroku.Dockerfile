@@ -16,7 +16,7 @@ RUN pip install -r requirements.txt && poetry install
 ADD deployment /app/deployment
 WORKDIR /app/deployment
 ENV PORT=2137
-RUN chmod u+s /usr/sbin/cron
+RUN chmod u+s /usr/sbin/cron /usr/bin/tini
 RUN chmod 777 /app /app/deployment
 ENTRYPOINT ["/usr/bin/tini", "-sg",  "--"]
 CMD ["sh", "-c", "whoami && cron && envsubst < /app/deployment/heroku.nginx.conf.template > /app/deployment/heroku.nginx.conf && nginx -c /app/deployment/heroku.nginx.conf && uvicorn pythocron.main:app --root-path=/api/v1 --host=0.0.0.0"]
