@@ -13,7 +13,8 @@ def get_settings():
 
 app = FastAPI()
 
-origins = ["http://localhost:3000", "http://localhost:5000", "http://www.pythoncron.com", "http://pythoncron.com"]
+origins = ["http://localhost:3000", "http://localhost:5000",
+           "http://www.pythoncron.com", "http://pythoncron.com"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,8 +26,10 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup_event():
-    pathlib.Path(get_settings().logs_dir_path).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(get_settings().scripts_dir_path).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(get_settings().logs_dir_path).mkdir(
+        parents=True, exist_ok=True)
+    pathlib.Path(get_settings().scripts_dir_path).mkdir(
+        parents=True, exist_ok=True)
 
 
 @app.get("/")
@@ -50,9 +53,10 @@ def read_pythocron(
     pythocron_scriptfile_path = f"{settings.scripts_dir_path}/{pythocron_id}.py"
     try:
         pythocron_scriptfile_contents = open(pythocron_scriptfile_path).read()
-        cron = CronTab(user="root")
+        cron = CronTab(user=True)
         pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron_id)
-        pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
+        pythocron_jobs_matching_id_list = [
+            *pythocron_jobs_matching_id_iterator]
         if len(pythocron_jobs_matching_id_list) == 0:
             raise HTTPException(status_code=404, detail="Pythocron not found")
         elif len(pythocron_jobs_matching_id_list) == 1:
@@ -84,7 +88,7 @@ def create_pythocron(
     with open(pythocron_scriptfile_path, "w") as pythocron_scriptfile:
         pythocron_scriptfile.write(pythocron.script)
 
-    cron = CronTab(user="root")
+    cron = CronTab(user=True)
     job = cron.new(
         command=f"/usr/local/bin/python {pythocron_scriptfile_path} >> {pythocron_logfile_path} 2>&1",
         comment=pythocron_id,
@@ -106,7 +110,7 @@ def delete_pythocron(
     pathlib.Path(pythocron_logfile_path).unlink(missing_ok=True)
     pathlib.Path(pythocron_scriptfile_path).unlink(missing_ok=True)
 
-    cron = CronTab(user="root")
+    cron = CronTab(user=True)
     cron.remove_all(comment=pythocron_id)
     cron.write()
 
@@ -125,7 +129,7 @@ def update_pythocron(
     with open(pythocron_scriptfile_path, "w") as pythocron_scriptfile:
         pythocron_scriptfile.write(pythocron.script)
 
-    cron = CronTab(user="root")
+    cron = CronTab(user=True)
     pythocron_jobs_matching_id_iterator = cron.find_comment(pythocron_id)
     pythocron_jobs_matching_id_list = [*pythocron_jobs_matching_id_iterator]
     if len(pythocron_jobs_matching_id_list) == 0:
