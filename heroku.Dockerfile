@@ -11,6 +11,7 @@ RUN cd /app/frontend/pythocron && \
     cd /app/backend && \
     pip install -r requirements.txt && poetry install && \
     chmod u+s /usr/sbin/cron /usr/bin/tini && \
-    chmod -R 777 /app
+    chmod -R 777 /app && \
+    rm /bin/sh && ln -s /bin/bash /bin/sh
 ENTRYPOINT ["/usr/bin/tini", "-sg",  "--"]
 CMD ["/app/deployment/heroku.run.sh"]

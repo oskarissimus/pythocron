@@ -1,4 +1,5 @@
 #!/bin/sh
+bash /app/.profile.d/heroku-exec.sh
 whoami
 cron
 envsubst < /app/deployment/heroku.nginx.conf.template > /app/deployment/heroku.nginx.conf
