@@ -2,6 +2,7 @@ error_log /dev/stdout info;
 http {
     access_log /dev/stdout;
     server {
+        listen ${PORT};
         location /api/v1/ {
             proxy_pass http://localhost:8000/;
         }
