@@ -5,23 +5,8 @@ Purpose of this project is to enable simple scheduled code execution. It's like 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Running
-Create `docker-compose.yml` file with below contents:
 ```
-version: "3.0"
-services:
-  backend:
-    image: oskarissimus/pythocron-backend
-    ports:
-      - "8000:8000"
-  frontend:
-    image: oskarissimus/pythocron-frontend
-    ports:
-      - "5000:5000"
-```
-
-Than run:
-```
-docker-compose up
+docker run -p 8080:2137 oskarissimus/pythocron
 ```
 ## Building docker images from repo
 ```
@@ -29,13 +14,14 @@ docker-compose up
 git clone https://github.com/oskarissimus/pythocron.git
 cd pythocron
 
-# Just docker-compose up :)
-docker-compose up
+# Docker build and run
+docker build -t pythocron -f default.Dockerfile .
+docker run -p 8000:2137 pythocron
 ```
 
-Than go to http://localhost:5000
+Than go to http://localhost:8000
 
-You can also use backend directly http://localhost:8000/docs
+You can also use backend directly http://localhost:8000/api/v1/docs
 
 ## Running dev
 ### backend

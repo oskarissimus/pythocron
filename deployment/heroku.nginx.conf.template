@@ -1,0 +1,20 @@
+error_log /tmp/error.log;
+pid       /tmp/nginx.pid;
+http {
+    server {
+        listen ${PORT};
+        location /api/v1/ {
+            proxy_pass http://localhost:8000/;
+        }
+        location / {
+            root /app/frontend/pythocron/build;
+        }
+        access_log /tmp/nginx_host.access.log;
+        client_body_temp_path /tmp/client_body;
+        fastcgi_temp_path /tmp/fastcgi_temp;
+        proxy_temp_path /tmp/proxy_temp;
+        scgi_temp_path /tmp/scgi_temp;
+        uwsgi_temp_path /tmp/uwsgi_temp;
+    }
+}
+events {}
