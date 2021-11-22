@@ -9,7 +9,7 @@ ADD . /app
 RUN apt-get update && \
     apt-get install -y tini nginx nodejs npm gettext-base && \
     cd /app/frontend/pythocron && \
-    npm install --verbose && npm run build && \
+    npm install && npm run build && \
     cd /app/backend && \
     pip install -r requirements.txt && poetry install
 
