@@ -2,7 +2,7 @@ name: Default Docker Image CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, heroku-depl ]
 
 jobs:
   build:
