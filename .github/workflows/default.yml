@@ -1,0 +1,25 @@
+name: Default Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Docker Login
+      uses: docker/login-action@v1.10.0
+      with:
+        username: oskarissimus
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - uses: actions/checkout@v2
+    - name: Build and push the Docker images
+      run: |
+        export TAG=oskarissimus/pythocron
+        export TS=$(date +%s)
+        docker build -f default.Dockerfile -t $TAG:$TS .
+        docker tag $TAG:$TS $TAG:latest
+        docker push $TAG:$TS
+        docker push $TAG:latest
