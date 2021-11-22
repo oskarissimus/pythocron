@@ -4,6 +4,10 @@ Purpose of this project is to enable simple scheduled code execution. It's like 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
+
+
+
 ## Running
 ```
 docker run -p 8080:2137 oskarissimus/pythocron
