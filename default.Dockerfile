@@ -13,5 +13,5 @@ RUN apt-get update && \
     pip install -r requirements.txt && poetry install
 
 ENTRYPOINT ["/usr/bin/tini", "-sg",  "--"]
-CMD ["/app/deployment/heroku.run.sh"]
-EXPOSE 80
+CMD ["/app/deployment/default.run.sh"]
+EXPOSE 2137
