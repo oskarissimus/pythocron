@@ -2,7 +2,7 @@ error_log /tmp/error.log;
 pid       /tmp/nginx.pid;
 http {
     server {
-        listen 2137;
+        listen ${PORT};
         location /api/v1/ {
             proxy_pass http://localhost:8000/;
         }

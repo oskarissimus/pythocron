@@ -1,12 +1,13 @@
 FROM python:3.8-slim-bullseye
 
 ENV POETRY_VIRTUALENVS_CREATE=false \
-    REACT_APP_PYTHOCRON_BACKEND_URL="/api/v1"
+    REACT_APP_PYTHOCRON_BACKEND_URL="/api/v1" \
+    PORT=2137
 
 ADD . /app
 
 RUN apt-get update && \
-    apt-get install -y tini nginx nodejs npm && \
+    apt-get install -y tini nginx nodejs npm gettext-base && \
     cd /app/frontend/pythocron && \
     npm install --verbose && npm run build && \
     cd /app/backend && \
