@@ -2,10 +2,10 @@ name: Default Docker Image CI
 
 on:
   push:
-    branches: [ main, heroku-depl ]
+    branches: [ main ]
 
 jobs:
-  build:
+  Build and Publish:
     runs-on: ubuntu-latest
     steps:
     - name: Docker Login
