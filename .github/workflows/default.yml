@@ -19,7 +19,7 @@ jobs:
       run: |
         export TAG=oskarissimus/pythocron
         export TS=$(date +%s)
-        docker build -f default.Dockerfile -t $TAG:$TS .
+        docker build -t $TAG:$TS .
         docker tag $TAG:$TS $TAG:latest
         docker push $TAG:$TS
         docker push $TAG:latest
