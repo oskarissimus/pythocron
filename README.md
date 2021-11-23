@@ -89,3 +89,13 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 google cloud run - work as long as there is opened browser window - https://pythocron-c6bwyemtwq-lm.a.run.app/
 
 heroku - restarts every 24h - https://pythocron.herokuapp.com/
+
+## Known issues
+1. Deploy to gcp vm
+```
+Error restarting service: Failed to try-restart nscd.service: Unit nscd.service not found.
+Error restarting service: Failed to try-restart unscd.service: Unit unscd.service not found.
+Error restarting service: Failed to try-restart cron.service: Unit cron.service not found.
+Error restarting service: Failed to try-restart crond.service: Unit crond.service not found.
+Error reloading service: Failed to reload-or-restart ssh.service: Unit ssh.service not found.
+```
