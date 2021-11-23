@@ -4,6 +4,10 @@ Purpose of this project is to enable simple scheduled code execution. It's like 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
+
+
+
 ## Running
 ```
 docker run -p 8080:2137 oskarissimus/pythocron
@@ -79,3 +83,9 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 - [ ] Unit testing for backend
 - [ ] Handle deactivating pythocrons
 - [ ] Configure github actions to run tests
+
+## Demo
+
+google cloud run - work as long as there is opened browser window - https://pythocron-c6bwyemtwq-lm.a.run.app/
+
+heroku - restarts every 24h - https://pythocron.herokuapp.com/
