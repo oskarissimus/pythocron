@@ -1,4 +1,4 @@
-FROM python:3.8-slim-bullseye
+FROM python:3.8-bullseye
 
 ENV POETRY_VIRTUALENVS_CREATE=false \
     REACT_APP_PYTHOCRON_BACKEND_URL="/api/v1" \
