@@ -83,3 +83,9 @@ Feel free to fork, create pull requests, and submit issues. This project is just
 - [ ] Unit testing for backend
 - [ ] Handle deactivating pythocrons
 - [ ] Configure github actions to run tests
+
+## Demo
+
+google cloud run - work as long as there is opened browser window - https://pythocron-c6bwyemtwq-lm.a.run.app/
+
+heroku - restarts every 24h - https://pythocron.herokuapp.com/
