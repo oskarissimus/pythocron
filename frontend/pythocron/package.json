@@ -12,7 +12,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "ace-builds": "^1.4.13",
-    "cronstrue": "^1.122.0",
+    "cronstrue": "^2.50.0",
     "history": "^5.1.0",
     "react": "^17.0.2",
     "react-ace": "^9.5.0",
