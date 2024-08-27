@@ -1,4 +1,11 @@
 {
     "name": "Pythocron",
-    "stack": "container"
+    "stack": "container",
+    "hooks": {
+        "prebuild": {
+            "commands": [
+                "gcloud auth configure-docker"
+            ]
+        }
+    }
 }
